@@ -109,7 +109,7 @@ func (b *DefaultButton) Content() (template.HTML, template.JS) {
 		h += `<div class="btn-group pull-` + b.Direction + `" style="margin-right: 10px">`
 	}
 
-	h += `<a ` + style + ` class="` + template.HTML(b.Id) + ` btn btn-sm btn-default ` + b.Action.BtnClass() + `" ` + b.Action.BtnAttribute() + `>
+	h += `<a data-id="{{.Id}}"` + style + ` class="` + template.HTML(b.Id) + ` btn btn-sm btn-default ` + b.Action.BtnClass() + `" ` + b.Action.BtnAttribute() + `>
                     <i class="fa ` + template.HTML(b.Icon) + `"></i>&nbsp;&nbsp;` + b.Title + `
                 </a>`
 	if b.Group {
