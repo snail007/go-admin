@@ -26,6 +26,7 @@ type AjaxAction struct {
 }
 
 type AlertData struct {
+	HTML               bool   `json:"html"`
 	Title              string `json:"title"`
 	Type               string `json:"type"`
 	ShowCancelButton   bool   `json:"showCancelButton"`
@@ -40,21 +41,21 @@ func Ajax(id string, handler types.Handler) *AjaxAction {
 		panic("wrong ajax action parameter, empty id")
 	}
 	return &AjaxAction{
-		Url:    URL(id),
-		Method: "post",
-		Data:   NewAjaxData(),
-		SuccessJS: `if (data.code === 0) {
-                                    swal(data.msg, '', 'success');
-                                } else {
-                                    swal(data.msg, '', 'error');
-                                }`,
-		ErrorJS: `if (data.responseText !== "") {
-									swal(data.responseJSON.msg, '', 'error');								
-								} else {
-									swal('error', '', 'error');
-								}`,
+		Url:      URL(id),
+		Method:   "post",
+		Data:     NewAjaxData(),
 		Handlers: context.Handlers{handler.Wrap()},
 		Event:    EventClick,
+		SuccessJS: `if (data.code === 0) {
+					swal({"closeOnConfirm":true,"html":true,"title":"",text:data.msg,type:'success'});
+                                } else {
+					swal({"closeOnConfirm":true,"html":true,"title":"",text:data.msg,type:'error'});
+				}`,
+		ErrorJS: `if (data.responseText !== "") {
+					swal({"closeOnConfirm":true,"html":true,"title":"",text:data.responseJSON.msg,type:'error'});
+				} else {
+					swal({"closeOnConfirm":true,"html":true,"title":"",text:'error',type:'error'});
+				}`,
 	}
 }
 
@@ -119,7 +120,7 @@ func (ajax *AjaxAction) ChangeHTMLWhenSuccess(identify string, text ...string) *
 			` + selector + `.html(` + data + `);
 		}
 	} else {
-		swal(data.msg, '', 'error');
+		swal({"closeOnConfirm":true,"html":true,"title":"",text":data.msg,"type":"error"});
 	}`
 	return ajax
 }
