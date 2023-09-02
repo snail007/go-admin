@@ -917,8 +917,8 @@ func (tb *DefaultTable) getInjectValueFromFormValue(dataList form.Values, typ ty
 			}
 		}
 	}
-
-	dataList = dataList.RemoveRemark()
+	//fix hook里面拿不到更新还是插入，还是单个更新
+	//dataList = dataList.RemoveRemark()
 
 	for k, v := range dataList {
 		k = strings.ReplaceAll(k, "[]", "")
