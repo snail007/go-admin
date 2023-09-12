@@ -107,6 +107,9 @@ func PopUpWithIframe(id, title string, data IframeData, width, height string) *P
 		param := ""
 		if data.AddParameterFn != nil {
 			param = data.AddParameterFn(ctx)
+			if len(param) > 0 && param[0] != '&' {
+				param = "&" + param
+			}
 		}
 		return true, "ok", fmt.Sprintf(`<iframe style="width:%s;height:%s;" 
 			scrolling="auto" 
@@ -185,7 +188,7 @@ func PopUpWithForm(data PopUpData, fn GetForm, url string) *PopUpAction {
 				SetPrefix(config.PrefixFixSlash()).
 				SetUrl(url).
 				SetOperationFooter(col1 + col2).GetContent()).
-				SetStyle(template.HTMLAttr(`overflow-x: hidden;overflow-y: hidden;`)).
+			SetStyle(template.HTMLAttr(`overflow-x: hidden;overflow-y: hidden;`)).
 			GetContent()
 	}
 	return &PopUpAction{
