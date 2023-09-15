@@ -115,7 +115,7 @@ func PopUpWithIframe(id, title string, data IframeData, width, height string) *P
 			scrolling="auto" 
 			allowtransparency="true" 
 			frameborder="0"
-			src="%s__goadmin_iframe=true&__go_admin_no_animation_=true&__goadmin_iframe_id=%s`+param+`"><iframe>`,
+			src="%s__goadmin_iframe=true&__go_admin_no_animation_=true&__goadmin_iframe_id=%s`+param+`"></iframe>`,
 			data.Width, data.Height, data.Src, modalID)
 	}
 	return &PopUpAction{
